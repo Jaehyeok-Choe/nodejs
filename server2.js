@@ -1,5 +1,14 @@
 const express = require("express");
+const hbs = require('express-handlebars')
 const app = express();
+
+app.engine('hbs',hbs({
+    extname:'hbs',
+    defaultLayout:'layout',
+    layoutsDir:__dirname + '/views/layouts',
+    partialsDir:__dirname+'/views/partials'
+}));
+app.set("view engine", "hbs");
 
 app.use(express.static(__dirname + "/public"));
 
@@ -8,7 +17,7 @@ app.use((req, res, next)=>{
 })
 
 app.get('/',(req,res)=>{
-    res.status(200).sendFile(__dirname + "/index.html");
+    res.status(200).render('index')
 })
 
 app.listen(3000,()=>{
